@@ -1,0 +1,8 @@
+body {
+  background-color: #522F19;
+}
+#fruit-dojo {
+  background: url(images/dojo-board.jpg)  no-repeat;
+  background-size: cover;  
+  display: block;   
+}

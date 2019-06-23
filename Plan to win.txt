@@ -1,0 +1,114 @@
+Requirements:
+- possible to win or lose or has a score. there is an end to a game
+- has to be deployed 
+- has to be ready by thursday morning
+
+*********************
+Fruit Ninja game
+*********************
+    Fruits appear on canvas from bottom of the screen and fly in a 
+    randomized parabolic trajectory back to the bottom. The user mouseOver
+    the fruits to slash them and to gain game points. The user allowed to
+    miss 10 fruits before the game ends. The game forms a highest score board 
+    at the end.
+
+Iteration 1: Minimal Viable model
+    canvas height 800px, width 1200px, static background
+    circles with randomly generated raduis enters from the bottom of the
+    canvas and fly in an expected trajectory to from height 800 to height 300.
+    circles are emmited from random place width between 200 and 1000.
+
+    the circles are an object with the property isSlashed = false by default.
+    when clicked or hovered over isSlashed is changed to true.
+    when isSlashed = true circles change color/shape/disappear.
+    at this point total score gets incremented.
+
+    if the circle reaches height 800 it is considered missed.
+    at this point fruitsLeftToMiss gets decremented. 
+
+    when the mouse move around the screen it leaves a trace of some kind,
+    tail, bunch of small circles that grow smaller and dissapear.
+
+Iteration 2: Building on fundamentals
+    the game is possible to start over without refreshing the page.
+    the game keeps track of highest score and displays the table of 5 last 
+    scores next to the restart button 
+
+    circle objects are replaced with simple 2d fruit pictures.
+    There are 3-5 fruit pictures which are picked randomly.
+    when isSlashed = true images of fruit change to different images
+    like slashed fruit.
+
+Iteration 3: Adding features
+    add starting screen which have start game button and a choise of 3
+    difficulty levels.
+    difficulty levels change the interval of fruits generating. More difficult - 
+    more fruits generated. 
+    Bonus points if slashed fruits in one stroke.
+    or if you cut 2 fruits within 500ms
+
+
+Structure:
+    Class fruit {
+      constructor() {
+      this.isSlashed = false;
+      this.x=500
+      this.y=800;
+      this.width=50;
+      this.height=50;
+      }
+    
+      drawItself() {
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+      }
+
+      moveItself() {
+        ctx.clearRect(this.x, this.y, this.width, this.height)
+              Quadratic curve
+      context.quadraticCurveTo(cx, cy, x, y);
+
+      y=x^2 ?
+      y = randomModifier * x^2 ?
+      }
+    }
+
+class Game {
+  constructor() {
+    this.fruitsArr = [] // every time i create a fruit I push it to this array
+
+            // every time the fruit get slashed I remove it from the array after showing the image or time like 2s
+  }
+}
+
+
+    
+function startGame() {
+  //how to create new fruits every so often?
+  setInterval(()=>{
+    fruit = new fruit();
+    fruit.drawItself()
+    animate(fruit);
+//should i call animate on a every object, does the animate function need to receive this object?
+  }, 300)
+
+
+  }
+
+function animate(newFruit){
+
+how to make animation look like gravitation?
+
+    setInterval(()=>{
+      ctx.clearRect(0,0,1200,800);
+      
+
+
+    myGame.fruitsArr.forEach((eaachFruit)=> {
+    eachFruit.drawItself()
+
+    })
+    }, 50);
+
+  }
+
+
