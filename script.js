@@ -22,7 +22,6 @@ let logosCount = 0;
 let message = "Collect 10 honor badges to win"
 let isOver = false;
 
-
 function setup() {
   // The background image must be the same size as the parameters
   // into the createCanvas() method. In this program, the size of
@@ -31,20 +30,17 @@ function setup() {
   hearticon = loadImage('images/lives-icon.png');
   ironIcon = loadImage('images/Iron-icon2.png');
   badFruitImg = loadImage('images/bomb-icon.png');
+  for(let i = 0; i < badgeImmages.length; i++) {
+    badgeImmages[i] = loadImage(badgeImmages[i])
+  }
   createCanvas(1000, 600);
-
-
-
   sword = new Blade(color("#FFF0EE"));
   //60 fps by default
   frameRate(30); 
-
-
 }
 
 function draw() {
   background(bg);
-  
   if(mouseIsPressed) {
     sword.swing(mouseX, mouseY)
     
@@ -68,7 +64,6 @@ function draw() {
     fruit[i].update();
     fruit[i].draw();
     
-
     if(!fruit[i].visible ) {
       if(!fruit[i].isSliced && !fruit[i].isBad) {
         lives -= 1;
@@ -79,22 +74,7 @@ function draw() {
         logosCount += 1;
       }
     }
-    if(lives < 1) {
-      message = "Game Over, gaijin!"
-      drawMainMessage(message, 50)
-      isOver = true;
-      setTimeout(()=>{
-        endGame()
-      }, 500)
-    }
-    if(score >= 10) {
-      message = "You Rock !!!"
-      isOver = true;
-      drawMainMessage(message, 50)
-      setTimeout(()=>{
-        winGame();
-      }, 500)
-    }
+   
     if(fruit[i].isSliced && !fruit[i].isBad) {
       splat.push(fruit[i])
       fruit.splice(i, 1)
@@ -104,9 +84,14 @@ function draw() {
     }
 
   }
+  if(lives < 1) {
+    endGame("Game Over, gaijin!")
+  }
+  if(score >= 50) {
+    winGame("You Rock !!!");
+  }
   if(!isOver) {
     drawMainMessage(message, 38);
-    
   }
   drawScore();
   drawLives();
@@ -117,33 +102,34 @@ function draw() {
       sword.update();
       sword.draw();
   }
-    
 }
-
 function getImage() {
   let randImage = loadImage(random(fruitImages))
   return randImage
 }
-function endGame() {
-  noLoop();
+function endGame(msg) {
+  message = msg;
+  isOver = true;
+  drawMainMessage(msg, 50)
+  setTimeout(()=>{
+    drawMainMessage(msg, 50)
+    noLoop();
+  }, 500)
   console.log(`Game Over!`);
 }
-function winGame() {
-  noLoop();
+function winGame(msg) {
+  message = msg
+  isOver = true;
+  drawMainMessage(msg, 50)
+  setTimeout(()=>{
+    drawMainMessage(msg, 50)
+    noLoop();
+  }, 500)
   console.log(`You Rock!`)
 }
-
 function fruitGenerator() {
-  let bad = (random() > 0.8)
-  
-  let r = bad ? 255 : 0 ;
-  let g = bad ? 0 : random(255);
-  let b = bad ? 0 : random(255);
-  
-  
-  let col = color(r,g,b);
-  let fr = new Fruit(col, bad, getImage())
-  return fr
+  let bad = (random() > 0.99)
+  return new Fruit(bad, getImage())
 }
 function drawScore() {
   fill(0, 102, 153);
@@ -156,7 +142,7 @@ function drawScore() {
 
   for(let i = 0; i < logosCount; i++) {
     noStroke();
-    image(ironIcon, 18, yIcon)
+    image(badgeImmages[i], 18, yIcon)
     yIcon += 50;
   }
 } 
@@ -166,8 +152,6 @@ function drawLives() {
   textSize(30);
   text(lives, 860, 40);
   text('Lives ', 900, 40);
-
-  
   let yIcon = 75;
   for(let i = 0; i < lives; i++) {
     noStroke();
@@ -176,7 +160,6 @@ function drawLives() {
   }
 }
 function drawMainMessage(msg, size) {
-
   fill(33, 125, 184)
   noStroke();
   textSize(size);

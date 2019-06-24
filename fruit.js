@@ -1,6 +1,5 @@
 class Fruit {
-  constructor( color, bad, picture) {
-    this.color = color;
+  constructor( bad, picture) {
     this.size = 65;
     //coordinates and velocity
     this.x = random(width * 0.2, width * 0.8);
@@ -16,7 +15,7 @@ class Fruit {
     this.badFruitPic = loadImage('images/bomb-icon.png');
     this.stainPic = loadImage('images/stain-icon.png');
   }
-
+ 
   draw() {
     if(this.isBad) {
       image(this.badFruitPic, this.x, this.y)
@@ -25,7 +24,7 @@ class Fruit {
       image(this.picture, this.x, this.y)
     } 
     if(this.isBad && this.isSliced) {
-      endGame()
+      endGame('Stay away from bombs!')
     } 
   }
 
