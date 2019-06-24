@@ -24,36 +24,26 @@ class Fruit {
     if(!this.isBad) {  
       image(this.picture, this.x, this.y)
     } 
-   
     if(this.isBad && this.isSliced) {
       endGame()
-    }
-
- 
+    } 
   }
 
   update () {
+    this.x += this.xV
+    this.y += this.yV
     
-
-      this.x += this.xV
-      this.y += this.yV
+    this.xV *= 0.97;
+    this.yV += GRAVITY 
       
-      this.xV *= 0.97;
-      this.yV += GRAVITY 
-      
-    
-   
-
     if(this.y > height) {
       this.visible = false;
     }
   }
   drawSplat() {
     image(this.stainPic, this.x, this.y)
+    
   }
-
-
-
 }
 
 function randomXV (x) {

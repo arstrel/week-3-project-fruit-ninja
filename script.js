@@ -61,10 +61,9 @@ function draw() {
     }
   }
 
-  for(let i = 0; i > splat.length; i++) {
-    fruit[i].drawSplat();
+  for(let i = splat.length - 1; i >= 0; i--) {
+    image(splat[i].stainPic, splat[i].x, splat[i].y)
   }
-  
   for(let i = fruit.length - 1; i >= 0; i--) {
     fruit[i].update();
     fruit[i].draw();
@@ -96,10 +95,9 @@ function draw() {
         winGame();
       }, 500)
     }
-    if(fruit[i].isSliced && !fruit[i].bad) {
+    if(fruit[i].isSliced && !fruit[i].isBad) {
       splat.push(fruit[i])
       fruit.splice(i, 1)
-      console.log(splat);
     }
     if(fruit[i] && !fruit[i].visible) {
       fruit.splice(i, 1)
