@@ -46,17 +46,26 @@ class Blade{
   //   BUT that will require to slice perfectly in the middle of the fruit
 
     if(fruit.isSliced || this.swipes.length < 2) {
-      return ;
+      return false;
     }
 
     let length = this.swipes.length;   
 
-    
     let d1 = dist(this.swipes[length - 1].x, this.swipes[length - 1].y, fruit.x, fruit.y);
     let d2 = dist(this.swipes[length - 2].x, this.swipes[length - 2].y, fruit.x, fruit.y);
     let d3 = dist(this.swipes[length - 1].x, this.swipes[length - 1].y, this.swipes[length - 2].x, this.swipes[length - 2].y)
-    fruit.isSliced = d1 < fruit.size || (d1 < d3 && d2 < d3) 
+
+    let result = d1 < fruit.size || ((d1 < d3 && d2 < d3) && (d3 < width / 4));
+    fruit.isSliced = result;
+    
+    return result
     
   }
+
+  clearBlade() {
+    this.swipes.splice(0, 1); 
+    this.swipes.splice(0, 1); 
+  }
+  
 
 }

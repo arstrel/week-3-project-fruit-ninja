@@ -1,41 +1,57 @@
 class Fruit {
-  constructor(x, y, size, color, speed) {
+  constructor( color, bad, picture) {
     this.color = color;
-    this.speed = speed;
-    this.size = size;
+    this.size = 65;
     //coordinates and velocity
-    this.x = x;
-    this.y = y;
-    this.xV = randomXV(x);
+    this.x = random(width * 0.2, width * 0.8);
+    this.y = height;
+    this.xV = randomXV(this.x);
     this.yV = random(-28, -42);
+    
 
     this.isSliced = false;
     this.visible = true;
+    this.isBad = bad;
+    this.picture = picture;
+    this.badFruitPic = loadImage('images/bomb-icon.png');
+    this.stainPic = loadImage('images/stain-icon.png');
   }
 
   draw() {
-    noStroke(); 
-    if(this.isSliced) {
-      this.color = lerpColor(this.color, clearColor(this.color), 0.3)
+    if(this.isBad) {
+      image(this.badFruitPic, this.x, this.y)
+    }  
+    if(!this.isBad) {  
+      image(this.picture, this.x, this.y)
     } 
-    fill(this.color);
-    ellipse(this.x, this.y, this.size)
-    
-    
+   
+    if(this.isBad && this.isSliced) {
+      endGame()
+    }
 
+ 
   }
 
   update () {
-    this.x += this.xV
-    this.y += this.yV
+    
 
-    this.xV *= 0.97;
-    this.yV += GRAVITY 
+      this.x += this.xV
+      this.y += this.yV
+      
+      this.xV *= 0.97;
+      this.yV += GRAVITY 
+      
+    
+   
 
     if(this.y > height) {
       this.visible = false;
     }
   }
+  drawSplat() {
+    image(this.stainPic, this.x, this.y)
+  }
+
 
 
 }
