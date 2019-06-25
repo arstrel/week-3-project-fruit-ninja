@@ -11,9 +11,10 @@ class Blade{
   update() {
 
     //fade swipe
-    if(this.swipes.length > 20) {
+    if(this.swipes.length > 8) {
       //if the tail becomes too long which happens if the mouse 
       //moves slow then we delete tail twice as fast
+      this.swipes.splice(0, 1); 
       this.swipes.splice(0, 1); 
       this.swipes.splice(0, 1); 
 

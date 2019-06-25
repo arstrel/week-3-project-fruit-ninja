@@ -15,8 +15,6 @@ let currentLevel;
 let score = 0;
 let lives = 10;
 let heartIcon;
-let badFruitImg;
-let ironIcon;
 let badgeIcon;
 let logosCount = 0;
 let message = "Collect 10 honor badges to win"
@@ -31,20 +29,23 @@ let isOverMediumModeButton;
 let hardModeIcon;
 let isOverHardModeButton;
 let glowCircle;
+let ironNinjaIcon;
+let restartIcon;
+
 
 function setup() {
   // The background image must be the same size as the parameters
   // into the createCanvas() method. In this program, the size of
   // the image is 1000x600 pixels.
   bg = loadImage('images/dojo-board.jpg');
-  hearticon = loadImage('images/lives-icon.png');
-  ironIcon = loadImage('images/Iron-icon2.png');
-  badFruitImg = loadImage('images/bomb-icon.png');
+  hearticon = loadImage('images/Iron-icon2.png');
   startIcon = loadImage('images/new-game-icon-hq.png');
   easyModeIcon = loadImage('images/easy-icon.png');
   mediumModeIcon = loadImage('images/medium-icon.png');
   hardModeIcon = loadImage('images/hard-icon.png');
   glowCircle = loadImage('images/glow-circle-icon.png')
+  ironNinjaIcon = loadImage('images/iron-ninja-sm.png');
+  restartIcon = loadImage('images/restart-icon.png')
 
   for(let i = 0; i < badgeImmages.length; i++) {
     badgeImmages[i] = loadImage(badgeImmages[i])
@@ -62,6 +63,7 @@ function draw() {
 
   if(!isStarted) {
     drawDifficultyLevel()
+    drawLogo(20, 20);
   // if the distance is less than the circle's radius
   if(dist(mouseX, mouseY, 530, 430) < 50)
   {
@@ -112,19 +114,6 @@ function draw() {
   } else {
     cursor(ARROW);
   }
- 
-  
-  //example of selected blur effect
-  // smooth();
-  // noStroke();
-  // fill(255,0,0);
-  // ellipse(100,100,95,95);
-  // filter( BLUR, 6 );
-  // stroke(0);
-  // fill(255,255,0);
-  // ellipse(100,100,90,90);
-
-  
   image(startIcon, 430, 330)
   image(easyModeIcon, 120, 200)
   image(mediumModeIcon, 470, 120)
@@ -133,7 +122,6 @@ function draw() {
   
   if(mouseIsPressed) {
     sword.swing(mouseX, mouseY)
-    
   } else {
     sword.clearBlade();
   }
@@ -207,6 +195,16 @@ function mousePressed()
   if(isOverHardModeButton) {
     currentLevel = levels.hard
   }
+  if(isOver && isStarted && dist(mouseX, mouseY, 500, 260) < 110) {
+    isOver = false;
+    isStarted = false;
+    score = 0;
+    lives = 10;
+    logosCount = 0;
+    fruit = [];
+    splat = [];
+    loop();
+  }
 }
 
 function getImage() {
@@ -218,6 +216,7 @@ function endGame(msg) {
   isOver = true;
   drawMainMessage(msg, 50)
   setTimeout(()=>{
+    drawRestart(); 
     drawMainMessage(msg, 50)
     noLoop();
   }, 500)
@@ -274,12 +273,19 @@ function drawMainMessage(msg, size) {
 function drawDifficultyLevel () {
   fill(0, 102, 153);
   noStroke();
-  textSize(30);
-  text('Difficulty: ', 10, 40);
+  textSize(32);
+  text('Difficulty: ', 720, 40);
   for(key in levels) {
     if(levels[key] == currentLevel) {
-      text(key, 140, 40);
-
+      text(key, 855, 40);
     }
   }
+}
+function drawLogo(x, y) {
+  image(ironNinjaIcon, x, y)
+}
+function drawRestart() {
+  background(bg)
+  image(restartIcon, 400, 150)
+  drawLogo(200, 180); 
 }

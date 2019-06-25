@@ -12,7 +12,7 @@ class Fruit {
     this.visible = true;
     this.isBad = bad;
     this.picture = picture;
-    this.badFruitPic = loadImage('images/bomb-icon.png');
+    this.badFruitPic = loadImage('images/bomb-icon2.png');
     this.stainPic = loadImage('images/stain-icon.png');
   }
  
