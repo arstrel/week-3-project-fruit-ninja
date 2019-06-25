@@ -7,7 +7,7 @@ const fruitImages = ['images/grapes.png', 'images/pear.png', 'images/pineapple.p
 const badgeImmages = ['images/badge-1.png', 'images/badge-2.png', 'images/badge-3.png', 'images/badge-4.png', 'images/badge-5.png',
 'images/badge-6.png', 'images/badge-7.png', 'images/badge-8.png', 'images/badge-9.png', 'images/badge-10.png']; 
 const levels = {
-  easy: 0.7,
+  easy: 0.65,
   medium: 0.55,
   hard: 0.35
 }
@@ -31,6 +31,7 @@ let isOverHardModeButton;
 let glowCircle;
 let ironNinjaIcon;
 let restartIcon;
+let waveBg;
 
 
 function setup() {
@@ -45,12 +46,12 @@ function setup() {
   hardModeIcon = loadImage('images/hard-icon.png');
   glowCircle = loadImage('images/glow-circle-icon.png')
   ironNinjaIcon = loadImage('images/iron-ninja-sm.png');
-  restartIcon = loadImage('images/restart-icon.png')
+  restartIcon = loadImage('images/restart-icon.png');
+  waveBg = loadImage('images/faded-bg.png');
 
   for(let i = 0; i < badgeImmages.length; i++) {
     badgeImmages[i] = loadImage(badgeImmages[i])
   }
-
   currentLevel = levels.medium;
   createCanvas(1000, 600);
   sword = new Blade(color("#FFF0EE"));
@@ -59,9 +60,8 @@ function setup() {
 }
 
 function draw() {
-  background(bg);
-
   if(!isStarted) {
+    background(waveBg);
     drawDifficultyLevel()
     drawLogo(20, 20);
   // if the distance is less than the circle's radius
@@ -119,13 +119,13 @@ function draw() {
   image(mediumModeIcon, 470, 120)
   image(hardModeIcon, 820, 200)
   }
-  
   if(mouseIsPressed) {
     sword.swing(mouseX, mouseY)
   } else {
     sword.clearBlade();
   }
   if(isStarted) { 
+    background(bg);
     if(frameCount % 10 === 0) {
     // noise is a random sequence generator producing a more natural ordered, 
     // harmonic succession of numbers compared to the standard random()
@@ -195,6 +195,7 @@ function mousePressed()
   if(isOverHardModeButton) {
     currentLevel = levels.hard
   }
+  //restarting the game params
   if(isOver && isStarted && dist(mouseX, mouseY, 500, 260) < 110) {
     isOver = false;
     isStarted = false;
@@ -203,6 +204,7 @@ function mousePressed()
     logosCount = 0;
     fruit = [];
     splat = [];
+    message = "Collect 10 honor badges to win";
     loop();
   }
 }
@@ -219,7 +221,7 @@ function endGame(msg) {
     drawRestart(); 
     drawMainMessage(msg, 50)
     noLoop();
-  }, 500)
+  }, 700)
   console.log(`Game Over!`);
 }
 function winGame(msg) {
@@ -227,13 +229,14 @@ function winGame(msg) {
   isOver = true;
   drawMainMessage(msg, 50)
   setTimeout(()=>{
+    drawRestart();
     drawMainMessage(msg, 50)
     noLoop();
-  }, 500)
+  }, 700)
   console.log(`You Rock!`)
 }
 function fruitGenerator() {
-  let bad = (random() > 0.8)
+  let bad = (random() > 0.85) //15% chance of bomb
   return new Fruit(bad, getImage())
 }
 function drawScore() {
@@ -271,13 +274,13 @@ function drawMainMessage(msg, size) {
   text(msg, 225, 40);
 }
 function drawDifficultyLevel () {
-  fill(0, 102, 153);
+  fill(0, 0, 0);
   noStroke();
   textSize(32);
-  text('Difficulty: ', 720, 40);
+  text('Difficulty: ', 370, 40);
   for(key in levels) {
     if(levels[key] == currentLevel) {
-      text(key, 855, 40);
+      text(key, 505, 40);
     }
   }
 }

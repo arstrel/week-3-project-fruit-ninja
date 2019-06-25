@@ -5,19 +5,17 @@ class Blade{
     this.swipes = []; //storing vectors 
     this.swipeSizes = [];
     this.color = color; //setting the color for future refference
-
   }
 
   update() {
-
     //fade swipe
-    if(this.swipes.length > 8) {
+    if(this.swipes.length > 10 ) {
       //if the tail becomes too long which happens if the mouse 
       //moves slow then we delete tail twice as fast
-      this.swipes.splice(0, 1); 
-      this.swipes.splice(0, 1); 
-      this.swipes.splice(0, 1); 
-
+      this.swipes.splice(0, 4); 
+    }
+    else if(this.swipes.length > 6 ) {
+      this.swipes.splice(0, 2); //delete last value
     }
     else if(this.swipes.length > 0) {
       this.swipes.splice(0, 1); //delete last value
@@ -27,7 +25,7 @@ class Blade{
   draw() {
     for(let i = 0; i < this.swipes.length; i++) {
       //map(value, start1, stop1, start2, stop2, [withinBounds])
-      let width = map(i, 0, this.swipes.length , 2, 20) 
+      let width = map(i, 0, this.swipes.length , 10, 20) 
       noStroke(); //eliminates black border around cursor shadow circles
       fill(this.color);
       ellipse(this.swipes[i].x, this.swipes[i].y, width);
@@ -49,9 +47,7 @@ class Blade{
     if(fruit.isSliced || this.swipes.length < 2) {
       return false;
     }
-
     let length = this.swipes.length;   
-
     let d1 = dist(this.swipes[length - 1].x, this.swipes[length - 1].y, fruit.x, fruit.y);
     let d2 = dist(this.swipes[length - 2].x, this.swipes[length - 2].y, fruit.x, fruit.y);
     let d3 = dist(this.swipes[length - 1].x, this.swipes[length - 1].y, this.swipes[length - 2].x, this.swipes[length - 2].y)
@@ -60,13 +56,9 @@ class Blade{
     fruit.isSliced = result;
     
     return result
-    
   }
-
   clearBlade() {
     this.swipes.splice(0, 1); 
     this.swipes.splice(0, 1); 
   }
-  
-
 }

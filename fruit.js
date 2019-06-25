@@ -1,13 +1,11 @@
 class Fruit {
   constructor( bad, picture) {
-    this.size = 65;
+    this.size = 80;
     //coordinates and velocity
-    this.x = random(width * 0.2, width * 0.8);
+    this.x = random(width * 0.15, width * 0.85);
     this.y = height;
     this.xV = randomXV(this.x);
-    this.yV = random(-32, -42);
-    
-
+    this.yV = random(-34, -42);
     this.isSliced = false;
     this.visible = true;
     this.isBad = bad;
@@ -29,6 +27,9 @@ class Fruit {
   }
 
   update () {
+    if(this.isBad) {
+      this.size = 45;
+    }
     this.x += this.xV
     this.y += this.yV
     
