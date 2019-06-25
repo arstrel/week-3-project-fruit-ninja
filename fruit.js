@@ -5,7 +5,7 @@ class Fruit {
     this.x = random(width * 0.2, width * 0.8);
     this.y = height;
     this.xV = randomXV(this.x);
-    this.yV = random(-28, -42);
+    this.yV = random(-32, -42);
     
 
     this.isSliced = false;
