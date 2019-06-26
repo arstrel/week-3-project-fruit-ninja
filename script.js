@@ -53,7 +53,8 @@ function setup() {
     badgeImmages[i] = loadImage(badgeImmages[i])
   }
   currentLevel = levels.medium;
-  createCanvas(1000, 600);
+  let canvas = createCanvas(1000, 600);
+  canvas.parent('sketch-holder');
   sword = new Blade(color("#FFF0EE"));
   //60 fps by default
   frameRate(30); 
@@ -161,6 +162,8 @@ function draw() {
   if(lives < 1) {
     endGame("Game Over, gaijin!")
   }
+
+  //set winning score here
   if(score >= 50) {
     winGame("You Rock !!!");
   }
@@ -208,7 +211,6 @@ function mousePressed()
     loop();
   }
 }
-
 function getImage() {
   let randImage = loadImage(random(fruitImages))
   return randImage
