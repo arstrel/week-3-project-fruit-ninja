@@ -18,3 +18,17 @@ body {
   background: url('images/main-bg.png') no-repeat;
   background-size: cover;
 }
+#sketch-holder > canvas {
+  box-shadow: 10px 10px 20px #000000;
+}
+#signature {
+  color: #61377b;
+  font-size: 1.3em;
+  background-color: #80808094;
+  height: 27px;
+  width: 215px;
+  border-radius: 4px;
+}
+#signature > a {
+  text-decoration: none;
+}
